@@ -10,7 +10,6 @@
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/PacemakerX/codeForces-my-solutions)](https://github.com/PacemakerX/codeForces-my-solutions/commits/main)
 [![GitHub Repo Size](https://img.shields.io/github/repo-size/PacemakerX/codeForces-my-solutions)](https://github.com/PacemakerX/codeForces-my-solutions)
 [![GitHub Issues](https://img.shields.io/github/issues/PacemakerX/codeForces-my-solutions)](https://github.com/PacemakerX/codeForces-my-solutions/issues)
-[![Visits](https://visitor-badge.glitch.me/badge?page_id=PacemakerX.codeForces-my-solutions)](https://github.com/PacemakerX/codeForces-my-solutions)
 
 This repository contains all my **accepted solutions** for Codeforces problems, organized by contest and problem tag (A, B, C, etc.). It's a comprehensive archive to track my competitive programming journey and help others learn from my solutions.
 
