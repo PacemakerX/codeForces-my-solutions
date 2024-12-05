@@ -134,6 +134,11 @@ int main()
 // Explanation
 
 /*
+* In order to gain the maximum amount of points we must, 
+* pick the marbles which are 1 in quantiy to get 2 points each marbel,
 
+* now we will get 1 point for each marbel we collect of any type, 
+* simply subtracting the the total type marbels with the marbles with 
+* quantity 1 , we will get our score.
 
 */

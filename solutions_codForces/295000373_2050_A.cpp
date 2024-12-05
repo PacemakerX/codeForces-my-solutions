@@ -77,31 +77,38 @@ ll binpow(ll base, ll exp)
 /************/
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
+    int n, m;
 
-    vi arr;
+    cin >> n >> m;
+
+    int cnt = 0;
+
+    int sum = 0;
+
+    bool check = true;
+
+    vector<string> arr;
 
     forn(i, n)
     {
-        int x;
-        cin >> x;
-        arr.pb(x);
+        string str;
+        cin >> str;
+
+        arr.pb(str);
     }
-
-    sort(all(arr));
-
-    int sum = 0;
-    ford(i, n - 1, 0)
+    for (auto s : arr)
     {
 
-        if (sum + arr[i] <= k)
-            sum += arr[i];
+        if (s.size() + sum <= m)
+        {
+            cnt++;
+            sum += s.size();
+        }
         else
             break;
     }
 
-    cout << k - sum << nline;
+    cout << cnt << nline;
 }
 
 int main()
@@ -126,6 +133,8 @@ int main()
 // Explanation
 
 /*
-
+* Simply adding the character of the each word if it is less than the limit then 
+* and good if not, 
+* break, that's our word count 
 
 */
