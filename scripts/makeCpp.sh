@@ -37,6 +37,7 @@ typedef vector<vl> vvl;
 #define forn(i, n) for(int i = 0; i < int(n); i++)
 #define forr(i, a, b) for(int i = a; i <= b; i++)
 #define ford(i, a, b) for(int i = a; i >= b; i--)
+#define elasped_time   1.0 * clock() / CLOCKS_PER_SEC
 
 // Constants
 const int MOD = 1e9 + 7;
