@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the extensions to keep
-extensions="cpp sh out txt"
+extensions="cpp sh out txt md"
 
 # Loop through all files in the current directory
 for file in *; do
