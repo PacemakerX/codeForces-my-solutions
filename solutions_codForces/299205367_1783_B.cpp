@@ -76,44 +76,44 @@ ll binpow(ll base, ll exp)
 }
 
 /************/
-map<ll, ll> q;
-ll getMex()
+void solve()
 {
-    ll i = 0;
-    while (true)
+    int n;
+
+    cin >> n;
+    vvi arr(n, vi(n, 0));
+
+    int first = 1;
+    int last = n * n;
+
+    bool check = false;
+
+    int i = 0, j = 0;
+
+    while (i < n)
     {
-        if (q.count(i) == 0LL)
-            return i;
+        int j = (i % 2 ? n - 1 : 0);
+        while (i % 2 ? j >= 0 : j < n)
+        {
+            if ((i + j) % 2)
+                arr[i][j] = last--;
+            else
+                arr[i][j] = first++;
+
+            i % 2 ? j-- : j++;
+        }
 
         i++;
     }
-
-    return 0LL;
-}
-void solve()
-{
-
-    q.clear();
-    int n, k;
-    cin >> n >> k;
-    set<ll> ss;
-
-    ll maxNum = 0, mid, mex;
-    forn(i, n)
+    for (auto i : arr)
     {
-        ll x;
-        cin >> x;
-        q[x]++;
+        for (auto j : i)
+        {
+            cout << j << " ";
+        }
 
-        ss.insert(x);
-
-        maxNum = max(maxNum, x);
+        cout << nline;
     }
-    mex = getMex();
-    if (mex < maxNum)
-        cout << n + (k != 0 && ss.find((mex + maxNum + 1) / 2) == ss.end()) << nline;
-    else
-        cout << n + k << nline;
 }
 int main()
 {
@@ -136,14 +136,24 @@ int main()
 }
 // Explanation
 /*
+* The maximum beauty of an matrix will always be in the rant 0 to n^2 -1 , why?
 
-* Took a lot of brain Storming ,I spend 1 hour on this and came to the concluse, that
-* we need to calculate mex only , once if the mex is less than the maximum number present in the set 
-* (then it will only able to 1 more element, provide the elemnent is not present in the set and the number of operation is >1 )
-* Here both mex and max will remain same, even after n iterations, resulting in the same number only.
+* Lets take n= 3 , the maximum and min value we can have? 1 and 9 okay,now  that we have it
+* The difference between the two is 8
+* so we can differencces like 1,2,3,4,5,6,7,8 ,
 
-* if the initial mex is greater than max, then a total of n+k no. of elements will be added , 
-* becuase with each time, max and mex both will be incremented by one.
+* Now we know we can get the difference by placing 1 9 , then what?
+* now we want the diffferenmce 7, for this we can placce 1 9 2 ,
 
+* following this trene
 
+* 1 -> 9 -> 2
+* 7 <- 3 <- 8
+* 4 -> 6 -> 5
+
+* --->
+* <---|
+* \--->
+
+* A z pattern is followed
 */

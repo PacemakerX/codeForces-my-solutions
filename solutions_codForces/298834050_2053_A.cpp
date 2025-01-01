@@ -76,44 +76,31 @@ ll binpow(ll base, ll exp)
 }
 
 /************/
-map<ll, ll> q;
-ll getMex()
+bool check(int a, int b)
 {
-    ll i = 0;
-    while (true)
-    {
-        if (q.count(i) == 0LL)
-            return i;
 
-        i++;
-    }
-
-    return 0LL;
+    return (2 * b > a && 2 * a > b);
 }
 void solve()
 {
+    int n;
+    cin >> n;
+    vi arr(n);
+    for (auto &i : arr)
+        cin >> i;
 
-    q.clear();
-    int n, k;
-    cin >> n >> k;
-    set<ll> ss;
-
-    ll maxNum = 0, mid, mex;
-    forn(i, n)
+    forr(i, 0, n - 2)
     {
-        ll x;
-        cin >> x;
-        q[x]++;
+        bool flag = check(arr[i], arr[i + 1]);
 
-        ss.insert(x);
-
-        maxNum = max(maxNum, x);
+        if (flag)
+        {
+            cout << "YES" << nline;
+            return;
+        }
     }
-    mex = getMex();
-    if (mex < maxNum)
-        cout << n + (k != 0 && ss.find((mex + maxNum + 1) / 2) == ss.end()) << nline;
-    else
-        cout << n + k << nline;
+
+    cout << "NO" << nline;
 }
 int main()
 {
@@ -136,14 +123,13 @@ int main()
 }
 // Explanation
 /*
-
-* Took a lot of brain Storming ,I spend 1 hour on this and came to the concluse, that
-* we need to calculate mex only , once if the mex is less than the maximum number present in the set 
-* (then it will only able to 1 more element, provide the elemnent is not present in the set and the number of operation is >1 )
-* Here both mex and max will remain same, even after n iterations, resulting in the same number only.
-
-* if the initial mex is greater than max, then a total of n+k no. of elements will be added , 
-* becuase with each time, max and mex both will be incremented by one.
+* By obseration we know that any segment where i==j,will be good,as it will satisfy the property
+* x+y > x, z+y>x, z+x > y
+* By this,we can divide the whole group in n segments, that is 1 way,
+* The other way is by making a segment of only 2 elements because if a segment with 2 elements is not
+* stable, the same segment with added 1 more element won't be stable, 
+* Therefore we check for , all the segment of size 2 , if any of them is stable, 
+* we can say that, yes the sequence can be divided in atleast 2 different ways
 
 
 */

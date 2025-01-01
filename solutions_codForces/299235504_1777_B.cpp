@@ -76,44 +76,23 @@ ll binpow(ll base, ll exp)
 }
 
 /************/
-map<ll, ll> q;
-ll getMex()
+vl fact(100001);
+void factorial()
 {
-    ll i = 0;
-    while (true)
+    fact[0] = 1;
+
+    for (int i = 1; i < 100001; i++)
     {
-        if (q.count(i) == 0LL)
-            return i;
 
-        i++;
+        fact[i] = mod_mul(i, fact[i - 1]);
     }
-
-    return 0LL;
 }
 void solve()
 {
+    int n;
+    cin >> n;
 
-    q.clear();
-    int n, k;
-    cin >> n >> k;
-    set<ll> ss;
-
-    ll maxNum = 0, mid, mex;
-    forn(i, n)
-    {
-        ll x;
-        cin >> x;
-        q[x]++;
-
-        ss.insert(x);
-
-        maxNum = max(maxNum, x);
-    }
-    mex = getMex();
-    if (mex < maxNum)
-        cout << n + (k != 0 && ss.find((mex + maxNum + 1) / 2) == ss.end()) << nline;
-    else
-        cout << n + k << nline;
+    cout << mod_mul(mod_mul(n, n - 1), fact[n]) << nline;
 }
 int main()
 {
@@ -127,6 +106,7 @@ int main()
     freopen("./outputs/output.txt", "w", stdout);
 #endif
 
+    factorial();
     int t;
     cin >> t;
     while (t--)
@@ -136,14 +116,16 @@ int main()
 }
 // Explanation
 /*
+ * It starts wwith the basic obseration e.g. 1,2,3,
 
-* Took a lot of brain Storming ,I spend 1 hour on this and came to the concluse, that
-* we need to calculate mex only , once if the mex is less than the maximum number present in the set 
-* (then it will only able to 1 more element, provide the elemnent is not present in the set and the number of operation is >1 )
-* Here both mex and max will remain same, even after n iterations, resulting in the same number only.
-
-* if the initial mex is greater than max, then a total of n+k no. of elements will be added , 
-* becuase with each time, max and mex both will be incremented by one.
-
-
+ * if we concatenate 1,2,3 with 3,2,1, it will be 1,2,3,3,2,1
+ * the observation we can see is there is exactly i (i numberrs )  which are smaller
+ * than the number on arr[i], 3 is on index 2, ( and there are only 2 numbers smaller ) than
+ * 3, since we are concatenating the array, the pairs will be dubled
+ * similary we can caluculate the total number of  pairs, and then multiply it by 2
+ *
+ * NOTE : by  re arranging to we will alway get 4 pairs  for 3 , e.g. 2,1,3,3,1,2 there are total 4 pairs
+ *
+ * 2 * ( 0+1 +2 +3 ) = 2 * n*(n-1)/2 -> n*n-1 ( the number of pairs for 1 permutation)
+ * for n! permuation we will just multiply it , \n!*n*n-1
 */
