@@ -109,4 +109,10 @@ int main()
 }
 // Explanation
 /*
+% it can be observed in the pen and paper, that only odd numbers contribute to the,score
+% if there are n even numbers the score will always be 1,
+% if there are n odd numbers the score will always be n-1 ? e.g. ( 1 ,3 ,5,7),
+% the operations will be like, 1+3=4,score=1 , sum=1 ( 4/2=2,2/2=1), and subsequently
+% now if we introduc a single even number, this makes sure that the score is odd+1
+% e.g. (2,1,3,5,7) process them in same  order to see, the score
  */
