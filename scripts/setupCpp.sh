@@ -1,10 +1,13 @@
 #!/bin/bash
 
-echo "Please enter the name of the Cpp file"
-read name
+echo "Please enter the name of the Cpp file (without extension):"
 
-name="$name.cpp"
+name="a.cpp"
 
+# Create the outputs directory if it doesn't exist
+mkdir -p outputs
+
+# Create the C++ file if it doesn't exist
 if [ -f "$name" ]; then 
     echo "File already exists!"
 else
@@ -26,7 +29,7 @@ typedef vector<vi> vvi;
 typedef vector<vl> vvl;
 
 //Macros
-#define nline "\n"
+#define nline "\\n"
 #define all(x) (x).begin(), (x).end()
 #define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) (int)(x).size()
@@ -85,12 +88,10 @@ void solve(){
 
 int main(){
 
-
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 
-    
     #ifndef ONLINE_JUDGE
         freopen("./outputs/input.txt", "r", stdin);
         freopen("./outputs/output.txt", "w", stdout);
@@ -98,15 +99,20 @@ int main(){
 
     // int t; cin>>t;while(t--)
     // solve();
-    
+
     return 0;
 }
-// Explanation 
 
+// Explanation 
 /*
 
 */
 EOL
 fi
 
+# Create input and output text files
+touch outputs/input.txt
+touch outputs/output.txt
+
+# Open the C++ file in VS Code
 code ./"$name"
