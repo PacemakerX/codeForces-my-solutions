@@ -13,7 +13,13 @@ if [ -f "$name" ]; then
 else
     cat <<EOL > "$name"
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+
 using namespace std;
+template <typename T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 // Type definitions
 typedef long long ll;
@@ -104,7 +110,35 @@ ll binpow(ll base, ll exp, ll mod = MOD)
     }
     return res;
 }
-/************/
+struct DSU
+{
+    vl parent, size;
+    DSU(ll n)
+    {
+        parent.resize(n);
+        size.resize(n, 1);
+        iota(all(parent), 0);
+    }
+    ll find(ll x)
+    {
+        if (x == parent[x])
+            return x;
+        return parent[x] = find(parent[x]);
+    }
+    void unite(ll x, ll y)
+    {
+        x = find(x);
+        y = find(y);
+        if (x == y)
+            return;
+        if (size[x] < size[y])
+            swap(x, y);
+        parent[y] = x;
+        size[x] += size[y];
+    }
+};
+
+//-------------------------------------------------------//
 void solve()
 {
     // Your solution code here
@@ -118,11 +152,15 @@ int main()
 #ifndef ONLINE_JUDGE
     freopen("./outputs/input.txt", "r", stdin);
     freopen("./outputs/output.txt", "w", stdout);
+    cerr.rdbuf(cout.rdbuf());
 #endif
+
     int t;
     cin >> t;
+    // int t = 1;
     while (t--)
         solve();
+
     return 0;
 }
 // Explanation 
