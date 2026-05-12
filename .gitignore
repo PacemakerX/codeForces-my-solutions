@@ -2,3 +2,5 @@
 outputs/
 a*
 template.cpp
+*.log
+logs/
