@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Git post-commit hook — syncs new solutions to Obsidian vault.
+# Installed by scripts/setup_hooks.sh into .git/hooks/post-commit
+
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+SCRIPT="$REPO_ROOT/scripts/sync_to_obsidian.py"
+LOG="$REPO_ROOT/logs/sync.log"
+
+# Require Python 3
+PYTHON="$(command -v python3 2>/dev/null || true)"
+if [[ -z "$PYTHON" ]]; then
+    echo "[post-commit] WARNING: python3 not found — skipping vault sync" | tee -a "$LOG"
+    exit 0
+fi
+
+# Show which files were added in this commit (for context in terminal)
+ADDED="$(git diff-tree --no-commit-id -r --name-only --diff-filter=A HEAD \
+         | grep 'solutions_codForces/.*\.cpp' || true)"
+
+if [[ -z "$ADDED" ]]; then
+    # No new .cpp files — nothing to sync, exit silently
+    exit 0
+fi
+
+echo ""
+echo "╔══════════════════════════════════════════╗"
+echo "║  vault sync — new solutions detected     ║"
+echo "╚══════════════════════════════════════════╝"
+echo "$ADDED" | sed 's/^/  + /'
+echo ""
+
+"$PYTHON" "$SCRIPT"
+STATUS=$?
+
+if [[ $STATUS -eq 0 ]]; then
+    echo "[post-commit] Vault sync complete. Log: $LOG"
+else
+    echo "[post-commit] Vault sync finished with errors. Check: $LOG"
+fi
+
+# Hook exit code must be 0 — a failing hook would abort the commit message
+# display. Sync errors are non-fatal.
+exit 0
