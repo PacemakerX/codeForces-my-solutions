@@ -4,3 +4,4 @@ a*
 template.cpp
 *.log
 logs/
+**/__pycache__
