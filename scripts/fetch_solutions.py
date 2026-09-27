@@ -1,22 +1,31 @@
 import requests
 import os
 
-def fetch_accepted_solutions(handle, output_dir="accepted_solutions"):
-    # Base API URL
-    submissions_url = f"https://codeforces.com/api/user.status?handle={handle}&from=1&count=1000"
-
-    try:
-        # Fetch submissions from the Codeforces API
-        response = requests.get(submissions_url)
+def fetch_all_submissions(handle, batch_size=1000):
+    submissions = []
+    from_index = 1
+    while True:
+        url = f"https://codeforces.com/api/user.status?handle={handle}&from={from_index}&count={batch_size}"
+        response = requests.get(url)
         response.raise_for_status()
         data = response.json()
 
         if data["status"] != "OK":
             print("Failed to fetch submissions!")
-            return
+            return submissions
 
-        # Process submissions
-        submissions = data["result"]
+        batch = data["result"]
+        submissions.extend(batch)
+        if len(batch) < batch_size:
+            break
+        from_index += batch_size
+
+    return submissions
+
+def fetch_accepted_solutions(handle, output_dir="accepted_solutions"):
+    try:
+        # Fetch all submissions from the Codeforces API (paginated)
+        submissions = fetch_all_submissions(handle)
         submissions = sorted(submissions,key=lambda x: x['id'],reverse=True)
         accepted_solutions = []
         total_accepted = 0

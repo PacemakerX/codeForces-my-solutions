@@ -125,7 +125,7 @@ def fetch_cf_problems(force: bool = False) -> dict[str, dict]:
 
     logger.info("Fetching CF problem list from API...")
     try:
-        with urllib.request.urlopen(CF_API_URL, timeout=15) as resp:
+        with urllib.request.urlopen(CF_PROBLEMS_URL, timeout=15) as resp:
             data = json.loads(resp.read())
     except Exception as e:
         logger.warning("CF API fetch failed: %s — falling back to cache", e)
